@@ -42,6 +42,9 @@ importers:
       globals:
         specifier: ^15.14.0
         version: 15.14.0
+      hybrid-types:
+        specifier: github:ilkkamtk/hybrid-types
+        version: https://codeload.github.com/ilkkamtk/hybrid-types/tar.gz/e176cf5ba0f457044a601e3ef488694ef01f3add
       prettier:
         specifier: 3.4.2
         version: 3.4.2
@@ -712,6 +715,10 @@ packages:
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
+
+  hybrid-types@https://codeload.github.com/ilkkamtk/hybrid-types/tar.gz/e176cf5ba0f457044a601e3ef488694ef01f3add:
+    resolution: {tarball: https://codeload.github.com/ilkkamtk/hybrid-types/tar.gz/e176cf5ba0f457044a601e3ef488694ef01f3add}
+    version: 1.0.0
 
   ignore@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
@@ -1565,6 +1572,8 @@ snapshots:
   graphemer@1.4.0: {}
 
   has-flag@4.0.0: {}
+
+  hybrid-types@https://codeload.github.com/ilkkamtk/hybrid-types/tar.gz/e176cf5ba0f457044a601e3ef488694ef01f3add: {}
 
   ignore@5.3.2: {}
 
