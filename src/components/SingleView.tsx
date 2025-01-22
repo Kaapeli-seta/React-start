@@ -1,8 +1,8 @@
 // SingleView.tsx
-import {MediaItem} from '../types/DBTypes';
+import { MediaItem } from "hybrid-types/DBTypes";
 
 const SingleView = (props: {
-  item: MediaItem | undefined;
+  item: MediaItem;
   setSelectedItem: (item: MediaItem | undefined) => void;
 }) => {
   const {item, setSelectedItem} = props;
@@ -15,9 +15,21 @@ const SingleView = (props: {
     // - use video tag for displaying videos
     <>
     <dialog open>
-      {item &&
-      <img src={item.filename} alt={item.title}></img>
-      }
+          <button
+            onClick={() => {
+              setSelectedItem(undefined);
+            }}
+          >
+            Close
+          </button>
+          <h3>{item.title}</h3>
+          <p>{new Date(item.created_at).toLocaleString('fi-FI')}</p>
+          {item.media_type.includes('image') ? (
+            <img src={item.filename} alt={item.title} />
+          ) : (
+            <video src={item.filename} controls />
+          )}
+          <p>{item.description}</p>
     </dialog>
     </>
   );
