@@ -1,7 +1,23 @@
-const Upload = () => {
-  return (
-    <div>Upload</div>
-  )
-}
+import {useState} from 'react';
 
-export default Upload
+const Upload = () => {
+  const [uploading, setUploading] = useState(false);
+  return (
+    <>
+      <h2>Upload</h2>
+      <button
+        onClick={() => {
+          setUploading(true);
+          setTimeout(() => {
+            setUploading(false);
+          }, 3000);
+        }}
+      >
+        Upload
+      </button>
+      {uploading && <p>Uploading...</p>}
+    </>
+  );
+};
+
+export default Upload;
