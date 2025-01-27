@@ -10,5 +10,5 @@ export default defineConfig({
     globals: true,
     setupFiles: './vitest-setup.js',
   },
-  base: './',
+  base: '/~kaapokau/React-lab/dist',
 });
