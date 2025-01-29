@@ -17,7 +17,7 @@ const Home = () => {
         const mediaWithOwner: MediaItemWithOwner[] = await Promise.all(
           media.map(async (item) => {
             const owner = await fetchData<UserWithNoPassword>(
-              import.meta.env.VITE_AUTH_API + '/users/' + item.media_id,
+              import.meta.env.VITE_AUTH_API + '/users/' + item.user_id,
             );
 
             const mediaItem: MediaItemWithOwner = {
