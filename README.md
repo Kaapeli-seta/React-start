@@ -1,1 +1,1 @@
-## https://users.metropolia.fi/~kaapokau/React-lab/dist/
+## https://users.metropolia.fi/~kaapokau/React-lab-2/
