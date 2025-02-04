@@ -1,11 +1,13 @@
 import useForm from '../hooks/formHooks';
 import {Credentials} from '../types/localtypes';
-import {useNavigate} from 'react-router';
-import {useAuthentication} from '../hooks/apiHooks';
+/* import {useNavigate} from 'react-router';
+import {useAuthentication} from '../hooks/apiHooks'; */
+import {useUserContext} from '../hooks/contextHooks';
 
 const LoginForm = () => {
-  const navigate = useNavigate();
-  const {postLogin} = useAuthentication();
+  /*   const navigate = useNavigate();
+  const {postLogin} = useAuthentication(); */
+  const {handleLogin} = useUserContext();
   const initValues: Credentials = {
     username: '',
     password: '',
@@ -13,14 +15,9 @@ const LoginForm = () => {
 
   const doLogin = async () => {
     try {
-      const loginResult = await postLogin(inputs as Credentials);
-      console.log('doLogin result', loginResult);
-      if (loginResult) {
-        localStorage.setItem('token', loginResult.token);
-        navigate('/');
-      }
-    } catch (error) {
-      console.error((error as Error).message);
+      handleLogin(inputs as Credentials);
+    } catch (e) {
+      console.log((e as Error).message);
     }
   };
 

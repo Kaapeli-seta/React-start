@@ -1,13 +1,16 @@
-import {useUser} from '../hooks/apiHooks';
-import {useEffect, useState} from 'react';
-import {UserWithNoPassword} from 'hybrid-types/DBTypes';
-import {UserResponse} from 'hybrid-types/MessageTypes';
+/* import {useUser} from '../hooks/apiHooks'; */
+/* import {useEffect, useState} from 'react'; */
+/* import {UserWithNoPassword} from 'hybrid-types/DBTypes'; */
+/* import {UserResponse} from 'hybrid-types/MessageTypes'; */
+
+import {useUserContext} from '../hooks/contextHooks';
 
 const Profile = () => {
-  const [user, setUser] = useState<UserWithNoPassword | null>(null);
-  const {getUserByToken} = useUser();
+  const {user} = useUserContext();
+  /*   const [user, setUser] = useState<UserWithNoPassword | null>(null); */
+  /*   const {getUserByToken} = useUser(); */
 
-  useEffect(() => {
+  /*   useEffect(() => {
     getUser();
   }, []);
 
@@ -17,7 +20,7 @@ const Profile = () => {
       const userResponse: UserResponse = await getUserByToken(token);
       setUser(userResponse.user);
     }
-  };
+  }; */
 
   return (
     <>

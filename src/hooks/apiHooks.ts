@@ -76,7 +76,7 @@ const useUser = () => {
     try {
       return await fetchData<UserResponse>(import.meta.env.VITE_AUTH_API + '/users', options);
     } catch (error) {
-      throw new Error((error as Error).message);
+      throw error as Error;
     }
   };
 
