@@ -4,7 +4,12 @@ import {Credentials} from '../types/localtypes';
 import {useAuthentication} from '../hooks/apiHooks'; */
 import {useUserContext} from '../hooks/contextHooks';
 
-const LoginForm = () => {
+type LoginProps = {
+  toggleRegister: () => void;
+};
+
+const LoginForm = (props: LoginProps) => {
+  const {toggleRegister} = props;
   /*   const navigate = useNavigate();
   const {postLogin} = useAuthentication(); */
   const {handleLogin} = useUserContext();
@@ -48,6 +53,7 @@ const LoginForm = () => {
           />
         </div>
         <button type="submit">Login</button>
+        <button onClick={toggleRegister}>register</button>
       </form>
     </>
   );

@@ -23,6 +23,7 @@ const useForm = (callback: () => void, initState: Record<string, string>) => {
     handleSubmit,
     handleInputChange,
     inputs,
+    setInputs,
   };
 };
 
