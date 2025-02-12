@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import {fetchData} from '../lib/fetchdata';
 import {Credentials, RegisterCredentials} from '../types/localtypes';
 import {
+  AvailableResponse,
   LoginResponse,
   MessageResponse,
   UploadResponse,
@@ -124,4 +125,27 @@ const useComments = () => {
   // TODO: implement media/comments resource API connections here
 };
 
-export {useMedia, useAuthentication, useUser, useComments, useFile};
+const getUsernameAvailable = async (username: string) => {
+  // fetch from endpoint /users/username/:username
+  const tulos: AvailableResponse = await fetchData(
+    import.meta.env.VITE_AUTH_API + '/users/username/' + username,
+  );
+  return tulos;
+};
+
+const getEmailAvailable = async (email: string) => {
+  const tulos: AvailableResponse = await fetchData(
+    import.meta.env.VITE_AUTH_API + '/users/email/' + email,
+  );
+  return tulos;
+};
+
+export {
+  useMedia,
+  useAuthentication,
+  useUser,
+  useComments,
+  useFile,
+  getUsernameAvailable,
+  getEmailAvailable,
+};

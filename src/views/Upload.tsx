@@ -59,10 +59,11 @@ const Upload = () => {
     <>
       <h1>Upload</h1>
       {uploading && <p>Uploading...</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form className="flex flex-col items-center justify-center" onSubmit={handleSubmit}>
+        <div className="w-full">
           <label htmlFor="title">Title</label>
           <input
+            className="my-2.5 w-full rounded-md border-2 border-stone-400 bg-stone-900 p-1"
             name="title"
             type="text"
             id="title"
@@ -70,9 +71,10 @@ const Upload = () => {
             value={inputs.title}
           />
         </div>
-        <div>
+        <div className="w-full">
           <label htmlFor="description">Description</label>
           <textarea
+            className="my-2.5 w-full rounded-md border-2 border-stone-400 bg-stone-900 p-1"
             name="description"
             rows={5}
             id="description"
@@ -80,9 +82,10 @@ const Upload = () => {
             value={inputs.description}
           ></textarea>
         </div>
-        <div>
+        <div className="w-full">
           <label htmlFor="file">File</label>
           <input
+            className="my-2.5 w-full cursor-pointer rounded-md border-2 border-stone-400 bg-stone-900 p-2.5 file:rounded-md file:bg-stone-500 file:p-1"
             name="file"
             type="file"
             id="file"
@@ -92,6 +95,7 @@ const Upload = () => {
           />
         </div>
         <img
+          className="w-50 h-50 rounded-2xl object-contain"
           src={file ? URL.createObjectURL(file) : 'https://place-hold.it/200?text=Choose+image'}
           alt="preview"
           width="200"

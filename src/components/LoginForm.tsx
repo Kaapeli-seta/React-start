@@ -31,10 +31,11 @@ const LoginForm = (props: LoginProps) => {
   return (
     <>
       <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form className="flex w-full flex-col items-center justify-center" onSubmit={handleSubmit}>
+        <div className="w-full">
           <label htmlFor="UserWithLevelname">Username</label>
           <input
+            className="my-2.5 w-full rounded-md border-2 border-stone-400 bg-stone-900 p-1"
             name="username"
             type="text"
             id="UserWithLevelname"
@@ -42,9 +43,10 @@ const LoginForm = (props: LoginProps) => {
             autoComplete="username"
           />
         </div>
-        <div>
+        <div className="w-full">
           <label htmlFor="loginpassword">Password</label>
           <input
+            className="my-2.5 w-full rounded-md border-2 border-stone-400 bg-stone-900 p-1"
             name="password"
             type="password"
             id="loginpassword"
@@ -52,8 +54,18 @@ const LoginForm = (props: LoginProps) => {
             autoComplete="current-password"
           />
         </div>
-        <button type="submit">Login</button>
-        <button onClick={toggleRegister}>register</button>
+        <button
+          className="m-2.5 w-full cursor-pointer rounded-md bg-stone-600 p-2.5 duration-500 hover:bg-stone-700"
+          type="submit"
+        >
+          Login
+        </button>
+        <button
+          className="m-2.5 w-full cursor-pointer rounded-md bg-stone-600 p-2.5 duration-500 hover:bg-stone-700"
+          onClick={toggleRegister}
+        >
+          or register?
+        </button>
       </form>
     </>
   );

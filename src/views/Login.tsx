@@ -7,7 +7,15 @@ const Login = () => {
   const toggleRegister = () => {
     setDisplayRegister(!displayRegister);
   };
-  return <>{displayRegister ? <RegisterForm /> : <LoginForm toggleRegister={toggleRegister} />}</>;
+  return (
+    <>
+      {displayRegister ? (
+        <RegisterForm toggleRegister={toggleRegister} />
+      ) : (
+        <LoginForm toggleRegister={toggleRegister} />
+      )}
+    </>
+  );
 };
 
 export default Login;
