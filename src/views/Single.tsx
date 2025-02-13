@@ -1,5 +1,6 @@
 import {MediaItemWithOwner} from 'hybrid-types/DBTypes';
 import {NavigateFunction, useLocation, useNavigate} from 'react-router';
+import Likes from '../components/Likes';
 
 const Single = () => {
   const navigate: NavigateFunction = useNavigate();
@@ -15,6 +16,7 @@ const Single = () => {
       ) : (
         <video src={item.filename} controls />
       )}
+      <Likes item={item} />
       <p>{item.description}</p>
       <p>Owner: {item.username}</p>
       <p>Type: {item.media_type}</p>

@@ -1,4 +1,4 @@
-import {MediaItem, MediaItemWithOwner, UserWithNoPassword} from 'hybrid-types/DBTypes';
+import {Like, MediaItem, MediaItemWithOwner, UserWithNoPassword} from 'hybrid-types/DBTypes';
 import {useEffect, useState} from 'react';
 import {fetchData} from '../lib/fetchdata';
 import {Credentials, RegisterCredentials} from '../types/localtypes';
@@ -140,6 +140,55 @@ const getEmailAvailable = async (email: string) => {
   return tulos;
 };
 
+const useLike = () => {
+  const postLike = async (media_id: number, token: string) => {
+    console.log(token);
+    const options = {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({media_id}),
+    };
+    return await fetchData<MessageResponse>(import.meta.env.VITE_MEDIA_API + '/likes', options);
+  };
+
+  const deleteLike = async (like_id: number, token: string) => {
+    const options = {
+      method: 'DELETE',
+      header: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_MEDIA_API + '/likes/' + like_id,
+      options,
+    );
+  };
+
+  const getCountByMediaId = async (media_id: number) => {
+    return await fetchData<{count: number}>(
+      import.meta.env.VITE_MEDIA_API + '/likes/count/' + media_id,
+    );
+  };
+
+  const getUserLike = async (media_id: number, token: string) => {
+    const options = {
+      method: 'GET',
+      header: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return await fetchData<Like>(
+      import.meta.env.VITE_MEDIA_API + '/likes/bymedia/user/' + media_id,
+      options,
+    );
+  };
+
+  return {postLike, deleteLike, getCountByMediaId, getUserLike};
+};
+
 export {
   useMedia,
   useAuthentication,
@@ -148,4 +197,5 @@ export {
   useFile,
   getUsernameAvailable,
   getEmailAvailable,
+  useLike,
 };
