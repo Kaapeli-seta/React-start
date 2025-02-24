@@ -1,4 +1,10 @@
-import {Like, MediaItem, MediaItemWithOwner, UserWithNoPassword} from 'hybrid-types/DBTypes';
+import {
+  Like,
+  MediaItem,
+  MediaItemWithOwner,
+  UserWithNoPassword,
+  Comment,
+} from 'hybrid-types/DBTypes';
 import {useEffect, useState} from 'react';
 import {fetchData} from '../lib/fetchdata';
 import {Credentials, RegisterCredentials} from '../types/localtypes';
@@ -118,48 +124,76 @@ const useUser = () => {
     }
   };
 
-  return {getUserByToken, postRegister};
+  const getUsernameAvailable = async (username: string) => {
+    // fetch from endpoint /users/username/:username
+    const tulos: AvailableResponse = await fetchData(
+      import.meta.env.VITE_AUTH_API + '/users/username/' + username,
+    );
+    return tulos;
+  };
+
+  const getEmailAvailable = async (email: string) => {
+    const tulos: AvailableResponse = await fetchData(
+      import.meta.env.VITE_AUTH_API + '/users/email/' + email,
+    );
+    return tulos;
+  };
+
+  const getUserById = async (id: number) => {
+    return await fetchData<UserWithNoPassword>(import.meta.env.VITE_AUTH_API + '/users/' + id);
+  };
+
+  return {getUserByToken, postRegister, getUsernameAvailable, getEmailAvailable, getUserById};
 };
 
-const useComments = () => {
-  // TODO: implement media/comments resource API connections here
-};
-
-const getUsernameAvailable = async (username: string) => {
-  // fetch from endpoint /users/username/:username
-  const tulos: AvailableResponse = await fetchData(
-    import.meta.env.VITE_AUTH_API + '/users/username/' + username,
-  );
-  return tulos;
-};
-
-const getEmailAvailable = async (email: string) => {
-  const tulos: AvailableResponse = await fetchData(
-    import.meta.env.VITE_AUTH_API + '/users/email/' + email,
-  );
-  return tulos;
-};
-
-const useLike = () => {
-  const postLike = async (media_id: number, token: string) => {
-    console.log(token);
+const useComment = () => {
+  const {getUserById} = useUser();
+  const postComment = async (comment_text: string, media_id: number, token: string) => {
     const options = {
       method: 'POST',
       headers: {
         Authorization: 'Bearer ' + token,
         'Content-type': 'application/json',
       },
+      body: JSON.stringify({media_id, comment_text}),
+    };
+    return await fetchData<MessageResponse>(import.meta.env.VITE_MEDIA_API + '/comments', options);
+  };
+
+  const getCommentsByMediaId = async (media_id: number) => {
+    // Send a GET request to /comments/bymedia/:media_id to get the comments.
+    const comments = await fetchData<Comment[]>(
+      import.meta.env.VITE_MEDIA_API + '/comments/bymedia/' + media_id,
+    );
+    // Send a GET request to auth api and add username to all comments
+    const commentsWithUsername = await Promise.all<Comment & {username: string}>(
+      comments.map(async (comment) => {
+        const user = await getUserById(comment.user_id);
+        return {...comment, username: user.username};
+      }),
+    );
+    return commentsWithUsername;
+  };
+
+  return {postComment, getCommentsByMediaId};
+};
+
+const useLike = () => {
+  const postLike = async (media_id: number, token: string) => {
+    console.log('**********************************************' + token);
+    const options = {
+      method: 'POST',
+      headers: {Authorization: 'Bearer ' + token, 'Content-Type': 'application/json'},
       body: JSON.stringify({media_id}),
     };
     return await fetchData<MessageResponse>(import.meta.env.VITE_MEDIA_API + '/likes', options);
   };
 
   const deleteLike = async (like_id: number, token: string) => {
+    console.log('**********************************************' + token);
     const options = {
       method: 'DELETE',
-      header: {
-        Authorization: 'Bearer ' + token,
-      },
+      headers: {Authorization: 'Bearer ' + token},
     };
     return await fetchData<MessageResponse>(
       import.meta.env.VITE_MEDIA_API + '/likes/' + like_id,
@@ -176,9 +210,7 @@ const useLike = () => {
   const getUserLike = async (media_id: number, token: string) => {
     const options = {
       method: 'GET',
-      header: {
-        Authorization: 'Bearer ' + token,
-      },
+      headers: {Authorization: 'Bearer ' + token},
     };
     return await fetchData<Like>(
       import.meta.env.VITE_MEDIA_API + '/likes/bymedia/user/' + media_id,
@@ -189,13 +221,4 @@ const useLike = () => {
   return {postLike, deleteLike, getCountByMediaId, getUserLike};
 };
 
-export {
-  useMedia,
-  useAuthentication,
-  useUser,
-  useComments,
-  useFile,
-  getUsernameAvailable,
-  getEmailAvailable,
-  useLike,
-};
+export {useMedia, useAuthentication, useUser, useComment, useFile, useLike};
