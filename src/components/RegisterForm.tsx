@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {getEmailAvailable, getUsernameAvailable, useUser} from '../hooks/apiHooks';
+import {useUser} from '../hooks/apiHooks';
 import useForm from '../hooks/formHooks';
 import {RegisterCredentials} from '../types/localtypes';
 
@@ -10,7 +10,7 @@ type LoginProps = {
 const RegisterForm = (props: LoginProps) => {
   const [usernameAvailable, setUsernameAvailable] = useState(true);
   const [emailAvailable, setEmailAvailable] = useState(true);
-  const {postRegister} = useUser();
+  const {postRegister, getEmailAvailable, getUsernameAvailable} = useUser();
   const {toggleRegister} = props;
   const initValues: RegisterCredentials = {
     username: '',
